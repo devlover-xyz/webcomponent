@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <script src="components/userModal/index.js" defer></script>
+    <script src="components/userCard/index.js" defer></script>
+    <link rel="stylesheet" href="css/global.css">
+
+    <script>
+        let page = 1;
+        let max = 0;
+        const loadData = async () => {
+            await fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
+                .then((_) => _.json())
+                .then((_) => {
+                    _.results.forEach((user, index) => {
+                        max = _.info.pages;
+                        const nodeToBeInserted = document.createElement("user-card");
+                        nodeToBeInserted.setAttribute("name", user.id + '-' + user.name);
+                        nodeToBeInserted.setAttribute("avatar", user.image);
+                        nodeToBeInserted.setAttribute("status", user.status);
+                        nodeToBeInserted.setAttribute("species", user.species);
+                        nodeToBeInserted.setAttribute("gender", user.gender);
+                        nodeToBeInserted.setAttribute("key", user.id);
+                        document
+                            .getElementById("details")
+                            .insertAdjacentElement("beforeend", nodeToBeInserted);
+                    });
+                });
+            page++;
+        };
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                const {
+                    scrollTop,
+                    scrollHeight,
+                    clientHeight
+                } = document.documentElement;
+                if (scrollTop + clientHeight >= scrollHeight - 5 && max >= page) {
+                    loadData();
+                }
+            },
+            {
+                passive: true
+            }
+        );
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            loadData();
+        });
+    </script>
+
+</head>
+
+<body>
+    <h1 class="text-center">Web Components User Card</h1>
+    <div id="details"></div>
+
+    <!-- <user-card></user-card> -->
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Component</title>
+
+    <link id="my-footer-link" rel="import" href="components/my-footer.html">
+    <link id="my-footer-link" rel="import" href="components/custom-dialog.html">
+
+    <style>
+        .footer {
+            text-align: left;
+            background-color: black;
+        }
+
+        p {
+            color: red;
+        }
+
+        custom-dialog {
+            padding: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- <p>
+        Web Component
+    </p> -->
+
+    <time-formatted datetime="2024-12-01" year="numeric" month="long" day="numeric" hour="numeric" minute="numeric"
+        second="numeric" time-zone-name="short"></time-formatted>
+
+    <hr>
+
+    <time-formatted id="elem" hour="numeric" minute="numeric" second="numeric"></time-formatted>
+
+    <hr>
+
+    <time-formatted id="elem2" year="numeric" month="long" day="numeric" hour="numeric" minute="numeric"
+        second="numeric" time-zone-name="short"></time-formatted>
+
+    <hr>
+
+
+    <my-footer class="footer"></my-footer>
+
+    <script>
+        setInterval(() => elem.setAttribute('datetime', new Date()), 1000); // (5)
+        setInterval(() => elem2.setAttribute('datetime', new Date()), 1000); // (5)
+    </script>
+
+
+    <hr>
+
+    <button is="hello-button" name="aviq">Click me</button>
+    <button is="hello-button">Click me2</button>
+    <button is="hello-button">Click me3</button>
+    <button is="hello-button">Click me4</button>
+
+    <hr>
+
+    <button is="hello-button" disabled>Disabled</button>
+
+
+    <hr>
+    <show-hello id="hello" name="john"></show-hello>
+
+    <hr>
+
+    <div id="elem3"></div>
+
+    <hr>
+
+    <user-card>
+        <p slot="username">John Smith</p>
+        <span slot="birthday">01.01.2001</span>
+    </user-card>
+
+    <hr>
+
+    <custom-dialog>
+        Hello!
+    </custom-dialog>
+
+    <custom-dialog centered>
+        Hello center!
+    </custom-dialog>
+
+    <!-- <script>
+        elem3.attachShadow({ mode: 'open' });
+        // shadow tree memiliki gaya tersendiri (2)
+        elem3.shadowRoot.innerHTML = `
+        <style> p { font-weight: bold; } </style>
+        <p>Hello, John2!</p>
+      `;
+
+        // <p> hanya terlihat dari kueri di dalam shadow tree (3)
+        alert(elem3.shadowRoot.querySelectorAll('p').length); // 1
+    </script>
+
+    <script>
+        alert(document.querySelectorAll('p').length); // 0
+        alert(hello.shadowRoot.querySelectorAll('p').length); // 1
+    </script> -->
+
+    <script src="components/time-formatted.js"></script>
+    <script src="components/hello-button.js"></script>
+    <script src="components/show-hello.js"></script>
+    <script src="components/user-card.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.7/webcomponents-lite.js"></script>
+
+</body>
+
+</html>

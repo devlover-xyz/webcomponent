@@ -1,0 +1,27 @@
+<template id="tmpl">
+    <style>
+        /* the style will be applied from inside to the custom-dialog element */
+        :host {
+            display: inline-block;
+            border: 1px solid red;
+            padding: 10px;
+        }
+
+        :host([centered]) {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-color: blue;
+        }
+    </style>
+    <slot></slot>
+</template>
+
+<script>
+    customElements.define('custom-dialog', class extends HTMLElement {
+        connectedCallback() {
+            this.attachShadow({ mode: 'open' }).append(tmpl.content.cloneNode(true));
+        }
+    });
+</script>
